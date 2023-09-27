@@ -1,35 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Boton from "./components/Button";
+import Screen from "./components/Screen";
+import ClearButton from "./components/ClearButton";
+import {evaluate} from "mathjs"
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [input, setInput] = useState("")
+  const addInput = value => {
+    setInput(input + value)
+  }
+
+  const result = () => {
+    if (input) {
+      setInput(evaluate(input))
+    }else{
+      alert("Ingresa los valores")
+    }
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <h1 className="title">Calculadora Básica</h1>
+      </header>
+      <main className="container">
+        <section>
+          <Screen input={input}/>
+        </section>
+        <section className="row">
+          <Boton handleClick= {addInput}>7</Boton>
+          <Boton handleClick= {addInput}>8</Boton>
+          <Boton handleClick= {addInput}>9</Boton>
+          <Boton handleClick= {addInput}>*</Boton>
+        </section>
+        <section className="row">
+          <Boton handleClick= {addInput}>4</Boton>
+          <Boton handleClick= {addInput}>5</Boton>
+          <Boton handleClick= {addInput}>6</Boton>
+          <Boton handleClick= {addInput}>-</Boton>
+        </section>
+        <section className="row">
+          <Boton handleClick= {addInput}>1</Boton>
+          <Boton handleClick= {addInput}>2</Boton>
+          <Boton handleClick= {addInput}>3</Boton>
+          <Boton handleClick= {addInput}>+</Boton>
+        </section>
+        <section className="row">
+          <Boton handleClick= {result}>=</Boton>
+          <Boton handleClick= {addInput}>0</Boton>
+          <Boton handleClick= {addInput}>.</Boton>
+          <Boton handleClick= {addInput}>/</Boton>
+        </section>
+        <section className="row">
+          <ClearButton handleClear={() => setInput("")}>Clear</ClearButton>
+        </section>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
